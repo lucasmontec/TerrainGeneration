@@ -1,5 +1,6 @@
 package com.carvalab.terrain.test;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -8,6 +9,7 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.util.ArrayList;
 
 import javax.swing.JFrame;
 
@@ -24,6 +26,8 @@ public class QuadtreeTestFrame extends JFrame implements MouseListener, MouseMot
 	// false will paint circle
 	private boolean					paintRect			= false;
 	private boolean					showGrid			= true;
+
+	private ArrayList<Rectangle>	solidBounds			= new ArrayList<>();
 
 	public static void main(String[] args) {
 		QuadtreeTestFrame frame = new QuadtreeTestFrame();
@@ -49,6 +53,21 @@ public class QuadtreeTestFrame extends JFrame implements MouseListener, MouseMot
 				// draw quadtree
 				QuadtreeDraw.drawTree(tree, (Graphics2D) g, true, true, showGrid);
 
+				// draw bounds
+				synchronized (solidBounds) {
+					if (solidBounds.size() > 0)
+						for (Rectangle r : solidBounds) {
+							/*
+							 * g.setColor(Color.red);
+							 * g.fillRect((int) r.topLeft.x, (int) r.topLeft.y, (int) r.width, (int) r.height);
+							 */
+							g.setColor(Color.blue);
+							((Graphics2D) g).setStroke(new BasicStroke(2));
+							g.drawRect((int) r.topLeft.x, (int) r.topLeft.y, (int) r.width, (int) r.height);
+						}
+				}
+				((Graphics2D) g).setStroke(new BasicStroke(1));
+
 				// draw mouse
 				g.setColor(Color.green);
 				if (paintRect)
@@ -65,6 +84,7 @@ public class QuadtreeTestFrame extends JFrame implements MouseListener, MouseMot
 		canvas.addMouseListener(this);
 		canvas.addMouseMotionListener(this);
 		addKeyListener(this);
+		canvas.addKeyListener(this);
 		setVisible(true);
 		canvas.start();
 	}
@@ -122,6 +142,15 @@ public class QuadtreeTestFrame extends JFrame implements MouseListener, MouseMot
 			paintRect = !paintRect;
 		if (e.getKeyCode() == KeyEvent.VK_G)
 			showGrid = !showGrid;
+		if(e.getKeyCode() == KeyEvent.VK_Q)
+			synchronized (solidBounds) {
+				solidBounds = QuadtreeBounds.generate(tree, 6);
+			}
+		if (e.getKeyCode() == KeyEvent.VK_C)
+			synchronized (solidBounds) {
+				solidBounds.clear();
+			}
+
 	}
 
 	@Override
