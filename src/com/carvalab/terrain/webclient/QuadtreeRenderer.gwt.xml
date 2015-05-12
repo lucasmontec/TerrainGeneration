@@ -7,5 +7,6 @@
 	<entry-point class='com.carvalab.terrain.webclient.client.QuadtreeTestApp' />
 	
 	<source path="client" />
-
+	
+	<add-linker name="xsiframe"/>
 </module>

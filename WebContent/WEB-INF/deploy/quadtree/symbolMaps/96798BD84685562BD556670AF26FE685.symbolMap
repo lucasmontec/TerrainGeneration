@@ -1,9 +1,9 @@
 # { 4 }
 # { 'user.agent' : 'ie8' }
 # jsName, jsniIdent, className, memberName, sourceUri, sourceLine, fragmentNumber
-k,,com.carvalab.terrain.webclient.client.QuadtreeTestApp,,com/carvalab/terrain/webclient/client/QuadtreeTestApp.java,19,-1
-r,com.carvalab.terrain.webclient.client.QuadtreeTestApp::$onModuleLoad(Lcom/carvalab/terrain/webclient/client/QuadtreeTestApp;)V,com.carvalab.terrain.webclient.client.QuadtreeTestApp,$onModuleLoad,com/carvalab/terrain/webclient/client/QuadtreeTestApp.java,45,0
-s,com.carvalab.terrain.webclient.client.QuadtreeTestApp::QuadtreeTestApp()V,com.carvalab.terrain.webclient.client.QuadtreeTestApp,QuadtreeTestApp,com/carvalab/terrain/webclient/client/QuadtreeTestApp.java,19,0
+k,,com.carvalab.terrain.webclient.client.QuadtreeTestApp,,com/carvalab/terrain/webclient/client/QuadtreeTestApp.java,22,-1
+r,com.carvalab.terrain.webclient.client.QuadtreeTestApp::$onModuleLoad(Lcom/carvalab/terrain/webclient/client/QuadtreeTestApp;)V,com.carvalab.terrain.webclient.client.QuadtreeTestApp,$onModuleLoad,com/carvalab/terrain/webclient/client/QuadtreeTestApp.java,49,0
+s,com.carvalab.terrain.webclient.client.QuadtreeTestApp::QuadtreeTestApp()V,com.carvalab.terrain.webclient.client.QuadtreeTestApp,QuadtreeTestApp,com/carvalab/terrain/webclient/client/QuadtreeTestApp.java,22,0
 I,com.google.gwt.canvas.client.Canvas::detector,com.google.gwt.canvas.client.Canvas,detector,com/google/gwt/canvas/client/Canvas.java,34,-1
 J,,com.google.gwt.canvas.client.Canvas$CanvasElementSupportDetectedNo,,com/google/gwt/canvas/client/Canvas.java,249,-1
 L,com.google.gwt.canvas.client.Canvas$CanvasElementSupportDetectedNo::Canvas$CanvasElementSupportDetectedNo()V,com.google.gwt.canvas.client.Canvas$CanvasElementSupportDetectedNo,Canvas$CanvasElementSupportDetectedNo,com/google/gwt/canvas/client/Canvas.java,249,0
