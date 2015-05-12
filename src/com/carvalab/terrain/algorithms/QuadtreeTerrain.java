@@ -180,6 +180,7 @@ public class QuadtreeTerrain {
 			bottomLeft = new QuadtreeTerrain(this, Quadrant.BOTTOMLEFT);
 		if (bottomRight == null)
 			bottomRight = new QuadtreeTerrain(this, Quadrant.BOTTOMRIGHT);
+		filled = false;
 	}
 
 	/**
@@ -248,28 +249,7 @@ public class QuadtreeTerrain {
 	 * @return
 	 */
 	public boolean hasSolidsInRange(int x, int y, int width, int height) {
-		if (QuadtreeIntersection.rectangleToRectangle(
-				this.x,
-				this.y,
-				this.width,
-				this.height,
-				x,
-				y,
-				width,
-				height)) {
-			if (isFilled())
-				return true;
-			else if (hasChildren())
-				return topLeft.hasSolidsInRange(x, y, width, height)
-						|| topRight.hasSolidsInRange(x, y, width, height)
-						|| bottomLeft.hasSolidsInRange(x, y, width, height)
-						|| bottomRight.hasSolidsInRange(x, y, width, height);
-			else
-				return false;
-
-		}
-
-		return false;
+		return hasSolidsInRange(x, y, width, height, maxLevel);
 	}
 
 	/**
@@ -283,7 +263,7 @@ public class QuadtreeTerrain {
 	 *            stops the query at this level
 	 * @return
 	 */
-	public boolean hasSolidsInRange(int x, int y, int width, int height, int levelLimit) {
+	public boolean hasSolidsInRange(float x, float y, float width, float height, int levelLimit) {
 		if (QuadtreeIntersection.rectangleToRectangle(
 				this.x,
 				this.y,
@@ -298,10 +278,10 @@ public class QuadtreeTerrain {
 			else if (level == levelLimit)
 				return false;
 			else if (hasChildren())
-				return topLeft.hasSolidsInRange(x, y, width, height)
-						|| topRight.hasSolidsInRange(x, y, width, height)
-						|| bottomLeft.hasSolidsInRange(x, y, width, height)
-						|| bottomRight.hasSolidsInRange(x, y, width, height);
+				return topLeft.hasSolidsInRange(x, y, width, height, levelLimit)
+						|| topRight.hasSolidsInRange(x, y, width, height, levelLimit)
+						|| bottomLeft.hasSolidsInRange(x, y, width, height, levelLimit)
+						|| bottomRight.hasSolidsInRange(x, y, width, height, levelLimit);
 			else
 				return false;
 
@@ -354,5 +334,9 @@ public class QuadtreeTerrain {
 
 	public QuadtreeTerrain getFather() {
 		return father;
+	}
+
+	public boolean hasSolidsInRange(float f, float g, float minGridWidth, float minGridHeight) {
+		return hasSolidsInRange((int) f, (int) g, (int) minGridWidth, (int) minGridHeight);
 	}
 }

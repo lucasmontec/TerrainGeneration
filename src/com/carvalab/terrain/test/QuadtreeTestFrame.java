@@ -51,7 +51,7 @@ public class QuadtreeTestFrame extends JFrame implements MouseListener, MouseMot
 				g.fillRect(0, 0, getWidth(), getHeight());
 
 				// draw quadtree
-				QuadtreeDraw.drawTree(tree, (Graphics2D) g, true, true, showGrid);
+				QuadtreeDraw.drawTree(tree, (Graphics2D) g, true, false, showGrid);
 
 				// draw bounds
 				synchronized (solidBounds) {
@@ -98,7 +98,7 @@ public class QuadtreeTestFrame extends JFrame implements MouseListener, MouseMot
 			tree.paintCircunference((evt.getButton() == MouseEvent.BUTTON1), mousex, mousey, zsize);
 
 		synchronized (solidBounds) {
-			solidBounds = QuadtreeBounds.generate(tree, 7, 180);
+			solidBounds = QuadtreeBounds.generate(tree, 9, 200);
 		}
 	}
 
@@ -148,7 +148,7 @@ public class QuadtreeTestFrame extends JFrame implements MouseListener, MouseMot
 			showGrid = !showGrid;
 		if(e.getKeyCode() == KeyEvent.VK_Q)
 			synchronized (solidBounds) {
-				solidBounds = QuadtreeBounds.generate(tree, 8, 100);
+				solidBounds = QuadtreeBounds.generate(tree, 9, 200);
 			}
 		if (e.getKeyCode() == KeyEvent.VK_C)
 			synchronized (solidBounds) {
