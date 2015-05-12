@@ -238,6 +238,78 @@ public class QuadtreeTerrain {
 		return filled;
 	}
 
+	/**
+	 * Given a range, checks if the quadtree has any solids in it.
+	 * 
+	 * @param x
+	 * @param y
+	 * @param width
+	 * @param height
+	 * @return
+	 */
+	public boolean hasSolidsInRange(int x, int y, int width, int height) {
+		if (QuadtreeIntersection.rectangleToRectangle(
+				this.x,
+				this.y,
+				this.width,
+				this.height,
+				x,
+				y,
+				width,
+				height)) {
+			if (isFilled())
+				return true;
+			else if (hasChildren())
+				return topLeft.hasSolidsInRange(x, y, width, height)
+						|| topRight.hasSolidsInRange(x, y, width, height)
+						|| bottomLeft.hasSolidsInRange(x, y, width, height)
+						|| bottomRight.hasSolidsInRange(x, y, width, height);
+			else
+				return false;
+
+		}
+
+		return false;
+	}
+
+	/**
+	 * Given a range, checks if the quadtree has any solids in it.
+	 * 
+	 * @param x
+	 * @param y
+	 * @param width
+	 * @param height
+	 * @param levelLimit
+	 *            stops the query at this level
+	 * @return
+	 */
+	public boolean hasSolidsInRange(int x, int y, int width, int height, int levelLimit) {
+		if (QuadtreeIntersection.rectangleToRectangle(
+				this.x,
+				this.y,
+				this.width,
+				this.height,
+				x,
+				y,
+				width,
+				height)) {
+			if (isFilled())
+				return true;
+			else if (level == levelLimit)
+				return false;
+			else if (hasChildren())
+				return topLeft.hasSolidsInRange(x, y, width, height)
+						|| topRight.hasSolidsInRange(x, y, width, height)
+						|| bottomLeft.hasSolidsInRange(x, y, width, height)
+						|| bottomRight.hasSolidsInRange(x, y, width, height);
+			else
+				return false;
+
+		}
+
+		return false;
+	}
+
 	/*
 	 * GETS / SETS
 	 */

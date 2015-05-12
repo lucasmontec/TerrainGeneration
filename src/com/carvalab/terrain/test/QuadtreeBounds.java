@@ -9,22 +9,27 @@ public class QuadtreeBounds {
 
 	private static ArrayList<Rectangle>	solidBounds	= new ArrayList<>();
 	private static ArrayList<Rectangle>	minGridBounds	= new ArrayList<>();
-	private static int					minGridWidth	= 0, minGridHeight = 0;
+	private static float				minGridWidth	= 0, minGridHeight = 0;
 	private static int					minGridWSize	= 0, minGridHSize = 0;
 	private static boolean[][]			minGrid;
 	private static boolean[][]			finalMinGrid;
 
-	public static ArrayList<Rectangle> generate(QuadtreeTerrain tree, int resLevel) {
+	public static ArrayList<Rectangle> generate(QuadtreeTerrain tree, int resLevel, int minGridLevel) {
 		solidBounds.clear();
-		minGridWidth = (int) (tree.getWidth() / 10);
-		minGridHeight = (int) (tree.getHeight() / 10);
-		minGridWSize = (int) (tree.getWidth() / minGridWidth);
-		minGridHSize = (int) (tree.getHeight() / minGridHeight);
+		minGridBounds.clear();
+		minGridWidth = tree.getWidth() / minGridLevel;
+		minGridHeight = tree.getHeight() / minGridLevel;
+		minGridWSize = minGridLevel;
+		minGridHSize = minGridLevel;
 		minGrid = new boolean[minGridWSize][minGridHSize];
 		finalMinGrid = new boolean[minGridWSize][minGridHSize];
 
 		// Goes down the tree and get all solid bounds
+		System.out.println("Start");
+		long time = System.nanoTime();
 		analizeTree(tree, resLevel);
+		System.out.println("Tree analisys: " + (System.nanoTime() - time) / 1000000 + "ms");
+		time = System.nanoTime();
 
 		// Run through the mingrid
 		for (int i = 0; i < minGridWSize; i++) {
@@ -41,10 +46,10 @@ public class QuadtreeBounds {
 					}
 			}
 		}
-		System.out.println("mingrid: ");
-		printMatrix(minGrid);
+		System.out.println("mingrid make: " + (System.nanoTime() - time) / 1000000 + "ms");
+		time = System.nanoTime();
 
-		//Simplify the mingrid
+		// Simplify the mingrid - removes all non edges
 		for (int x = 1; x < minGridWSize - 1; x++) {
 			for (int y = 1; y < minGridHSize - 1; y++) {
 				if (minGrid[x + 1][y] && minGrid[x - 1][y] && minGrid[x][y + 1] && minGrid[x][y - 1]
@@ -52,17 +57,39 @@ public class QuadtreeBounds {
 					finalMinGrid[x][y] = false;
 			}
 		}
-		System.out.println("simplified: ");
-		printMatrix(finalMinGrid);
+		System.out.println("mingrid edge: " + (System.nanoTime() - time) / 1000000 + "ms");
+		time = System.nanoTime();
 
 		//Build minGridBounds
 		for (int x = 0; x < minGridWSize; x++) {
 			for (int y = 0; y < minGridHSize; y++) {
-				if (finalMinGrid[x][y])
-					minGridBounds.add(new Rectangle(new Point(x * minGridWidth, y * minGridHeight),
-							minGridWidth, minGridHeight));
+				if (finalMinGrid[x][y]) {
+					// Store the rectangle start
+					Point start = new Point(x * minGridWidth, y * minGridHeight);
+
+					// Find if the block spans in x or y
+					int spanx = x + 1;
+					int spany = y + 1;
+					if (spanx < minGridWSize-1 && finalMinGrid[spanx][y]) { // X span
+						while (spanx < minGridWSize - 1 && finalMinGrid[spanx][y]) {
+							finalMinGrid[spanx][y] = false;
+							spanx++;
+						}
+						minGridBounds.add(new Rectangle(start, minGridWidth * (spanx - x), minGridHeight));
+					} else if (spany < minGridHSize-1 && finalMinGrid[x][spany]) { // Y span
+						while (spany < minGridHSize-1 && finalMinGrid[x][spany]) {
+							finalMinGrid[x][spany] = false;
+							spany++;
+						}
+						minGridBounds.add(new Rectangle(start, minGridWidth, minGridHeight * (spany - y)));
+					} else { // No span
+						minGridBounds.add(new Rectangle(start, minGridWidth, minGridHeight));
+					}
+				}
 			}
 		}
+
+		System.out.println("mingrid bounds: " + (System.nanoTime() - time) / 1000000 + "ms");
 
 		return minGridBounds;
 	}
@@ -97,7 +124,7 @@ public class QuadtreeBounds {
 					.getWidth(), (int) node.getHeight()));
 	}
 
-	public static void printMatrix(boolean[][] m) {
+	private static void printMatrix(boolean[][] m) {
 		try {
 			int rows = m.length;
 			int columns = m[0].length;
@@ -116,5 +143,4 @@ public class QuadtreeBounds {
 			System.out.println("Matrix is empty!!");
 		}
 	}
-
 }
