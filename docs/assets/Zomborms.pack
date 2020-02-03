@@ -1,0 +1,96 @@
+
+Zomborms.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+testGrenade
+  rotate: false
+  xy: 1, 185
+  size: 40, 44
+  orig: 40, 44
+  offset: 0, 0
+  index: 1
+testGrenade
+  rotate: false
+  xy: 1, 139
+  size: 40, 44
+  orig: 40, 44
+  offset: 0, 0
+  index: 10
+testGrenade
+  rotate: false
+  xy: 43, 185
+  size: 40, 44
+  orig: 40, 44
+  offset: 0, 0
+  index: 11
+testGrenade
+  rotate: false
+  xy: 1, 93
+  size: 40, 44
+  orig: 40, 44
+  offset: 0, 0
+  index: 12
+testGrenade
+  rotate: false
+  xy: 43, 139
+  size: 40, 44
+  orig: 40, 44
+  offset: 0, 0
+  index: 13
+testGrenade
+  rotate: false
+  xy: 85, 185
+  size: 40, 44
+  orig: 40, 44
+  offset: 0, 0
+  index: 2
+testGrenade
+  rotate: false
+  xy: 1, 47
+  size: 40, 44
+  orig: 40, 44
+  offset: 0, 0
+  index: 3
+testGrenade
+  rotate: false
+  xy: 43, 93
+  size: 40, 44
+  orig: 40, 44
+  offset: 0, 0
+  index: 4
+testGrenade
+  rotate: false
+  xy: 85, 139
+  size: 40, 44
+  orig: 40, 44
+  offset: 0, 0
+  index: 5
+testGrenade
+  rotate: false
+  xy: 1, 1
+  size: 40, 44
+  orig: 40, 44
+  offset: 0, 0
+  index: 6
+testGrenade
+  rotate: false
+  xy: 43, 47
+  size: 40, 44
+  orig: 40, 44
+  offset: 0, 0
+  index: 7
+testGrenade
+  rotate: false
+  xy: 85, 93
+  size: 40, 44
+  orig: 40, 44
+  offset: 0, 0
+  index: 8
+testGrenade
+  rotate: false
+  xy: 43, 1
+  size: 40, 44
+  orig: 40, 44
+  offset: 0, 0
+  index: 9
